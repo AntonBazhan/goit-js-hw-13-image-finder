@@ -3,15 +3,13 @@ const baseUrl = 'https://pixabay.com/api/';
 export default {
   page: 1,
   query: '',
-  fetcArticles(query) {
+  async fetcArticles(query) {
     const keyapi = '16607986-426163c53c50d3a083010b3ce';
     const requestparams = `?image_type=photo&orientation=horizontal&q=${this.query}&page=${this.page}&per_page=12&key=${keyapi}`;
-    return fetch(baseUrl + requestparams)
-      .then(res => res.json())
-      .then(parseRes => {
-        this.incrementPage();
-        return parseRes.hits;
-      });
+    const res = await fetch(baseUrl + requestparams);
+    const parseRes = await res.json();
+    this.incrementPage();
+    return parseRes.hits;
   },
   get searchQuerry() {
     return this.query;
